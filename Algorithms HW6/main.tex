@@ -1,0 +1,102 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{times}
+\usepackage{breqn}
+\usepackage{fancyhdr,graphicx,amsmath,amssymb}
+\usepackage[ruled,vlined]{algorithm2e}
+\include{pythonlisting}
+
+\title{Algorithms Homework 6}
+\author{Koi Stephanos}
+\date{October 2019}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+\item
+
+    \hspace*{.5em}\begin{minipage}{.99\linewidth}
+            \begin{algorithm}[H]
+            \SetAlgoLined
+            \KwIn{sequence}
+            \KwResult{Returns largest monotonically increasing subsequence}
+            \BlankLine
+            subsequences = new Arr[sequence.length]\;
+            elementPlaced = false\;
+            nextSequence, longestSoFar = 0\;
+            subsequences[0] = [sequence[0]]\;
+            \BlankLine
+            \For{i = 1, i \(<\) sequence.length, i++}{
+                \While{elementPlaced = false \& nextSequence \leq longestSoFar}{
+                    \If{subsequences[nextSequence].last > sequence[i]}{
+                        Swap(subsequences[nextSequence].last, sequence[i])\;
+                        elementPlaced = true\;
+                    }
+                    nextSequence++\;
+                }
+                \If{elementPlaced = false}{
+                    longestSoFar++\;
+                    subsequences[longestSoFar] = [...subsequences[longestSoFar - 1], sequence[i]]\;
+                }
+                elementPlaced = false\;
+                nextSequence = 0\;
+            }
+            \caption{Find Longest Increasing Subsequence}
+            \end{algorithm}
+            \end{minipage}
+\\[\medskipamount]
+\item
+        \hspace*{7em}\begin{tabular}[h]{|c|c|c|}
+        \hline
+             Nodes & Shortest Path & Previous Node  \\
+        \hline
+                S    &   0   &   -\\
+        \hline
+                T    &   3   &   S\\
+        \hline
+                X    &   9   &   T\\
+        \hline
+                Y    &   5   &   S\\
+        \hline
+                Z    &   11  &   Y\\
+        \hline
+        \end{tabular}
+        \label{tab:my_label}
+\pagebreak
+\item
+    The A* algorithm is a single source optimal path algorithm, where the next node selected is that with the smallest f value, where f is a composition of g and h. Here g is the distance to that node following the path through the network and h is a heuristic constant representing the direct distance to that node. The key distinction between it and Dijkstra's is the use of a heuristic constant. The use of this constant helps ensure we take the best path, provided we can calculate a a good value for h that doesn't overestimate its distance from the start node.
+
+\item 
+    \begin{enumerate}[label=(\alph*)]
+        \item
+            BFS: \(O(|V| + |E|\)
+            \\[\medskipamount]
+            Floyd-Warshall: \(\theta(|V|^3)\)
+            \\[\medskipamount]
+            Bellman-Ford: \(\theta(|V||E|)\)
+            \\[\medskipamount]
+            Dijkstra's: \(O(|E| + |V|lg|V|\)
+            
+        \item
+            Dijkstra (Dense Graph): \()(|V|^2\)
+            
+        \item
+            BFS is the best choice if all connections in a graph have equal weights.
+        
+        \item
+            Floyd-Warshall should be used if we don't have a a starting node, and need to calculate shortest paths for the entire graph.
+            
+        \item
+            Bellman-Ford should be chosen if we have a single starting node and the graph contains negative weights, as Dijkstra's cannot handle negative weights.
+            
+        \item
+            Dijkstra's is often the best choice, but requires a starting node and all weights must be positive.        
+    \end{enumerate}
+\end{enumerate}
+\end{document}
