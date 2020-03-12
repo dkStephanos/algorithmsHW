@@ -1,0 +1,106 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\title{Homework 0 MHF 2191}
+\author{Stephen Rigo }
+\date{August 2019}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item 
+Make a 3x5 table with a title row
+
+Answer:
+    \begin{table}[htbp]
+        \centering
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+             Column 1 & Column 2 & Column 3 & Column 4 & Column 5\\
+        \hline
+                      &          &          &          &         \\
+        \hline
+                      &          &          &          &         \\
+        \hline
+                      &          &          &          &         \\
+        \hline
+        
+        \end{tabular}
+        \label{tab:my_label}
+    \end{table}
+
+
+
+    
+\item
+Find the radius of convergence and interval of convergence of the series.
+    \begin{equation}
+        \sum_{n=1}^{\infty} \frac{x^n}{n^25^n}
+        \end{equation}
+        
+        Answer:
+        $$ \lim_{n\to\infty} |\frac{a_{n+1}}{a_{n}}| = \lim_{n\to\infty} |\frac{x^{n+1}}{(n+1)^25^{n+1}}*\frac{n^25^n}{x^n}| = \lim_{n\to\infty} \frac{1}{(1+1/n)^2}\frac{|x|}{5} = \frac{|x|}{5}  $$
+        
+        By the ratio test, this series converges when $ \frac{|x|}{5}<1 $ , or $|x|<5$. Hence the radius of convergence is 5. 
+        
+        Checking the endpoints: When $x=-5$, the series is $\sum_{n=1}^{\infty} \frac{1}{n^2}$, which is a convergent p-series. 
+        
+        When $x=5$, the series becomes $\sum_{n=1}^{\infty} \frac{(-1)^n}{n^2}$, which converges by the alternating series test.
+        
+
+
+
+\item
+Find the area of the region that lies inside both circles $r=2\sin(\theta)$ and $r=\sin(\theta)+\cos(\theta)$. Hint: consider two regions.
+
+Answer:
+The curves intersect where $2\sin(\theta)=\sin(\theta)+\cos(\theta)\implies \sin\theta=\cos\theta\implies\theta=\frac{\pi}{4}$, and also at the origin at which $\theta=\frac{3\pi}{4}$ on the second curve.
+
+$$A=\int_{0}^{\frac{\pi}{4}}\frac{1}{2}(2\sin\theta)^2 d\theta+\int_{\frac{\pi}{4}}^{\frac{3\pi}{4}}\frac{1}{2}(\sin\theta+\cos\theta)^2 d\theta = \int_{0}^{\frac{\pi}{4}}(1-\cos2\theta) d\theta+\frac{1}{2}\int_{\frac{\pi}{4}}^{\frac{3\pi}{4}}(1+\sin2\theta) d\theta $$ 
+$$ = [\theta-\frac{1}{2}\sin2\theta]^{\frac{\pi}{4}}_0+[\frac{1}{2}\theta-\frac{1}{4}\cos2\theta]^{\frac{3\pi}{4}}_{\frac{\pi}{4}} = \frac{1}{2}(\pi-1)$$
+
+\item
+Create a 4 x 9 matrix. Use bmatrix
+
+Answer:
+$$\begin{bmatrix}
+    1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 \\
+    0 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 0 \\
+    0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 1 \\
+    0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 1 \\
+    \end{bmatrix}$$
+    
+\item
+Create an itemized list with an itemized sublist.
+
+    \begin{enumerate}
+        \item (Submitted by Dewey) $x=3$
+        \item (Submitted by Cheatem) $x=\frac{3}{4}$ or $x=\frac{3}{4}$
+        \item (Submitted by Andy Howe)
+        \begin{enumerate}
+            \item a regular, inline fraction: $x=\frac{3}{\frac{a}{0}}$
+            \item A fraction centered on a new line with larger size:
+            \large$$x=\frac{3}{\frac{a}{0}}$$
+            \item A fraction, inline, but with larger size: \large$x=\frac{3}{\frac{a}{0}}$
+    \end{enumerate}
+   \end{enumerate}
+
+    
+\item I can type \textbf{bold text}, \textit{italicized text}, the reals $\mathbb{R}$ using "backslash mathbb" or $\mathbb{R}$ using "backslash R" (since it is a "newcommand") and the integers $\mathbb{Z}$ or $\mathbb{Z}$.
+
+I can even type $x\in\mathbb{N}$ or $A\cap B\subseteq C$.
+
+\item Take a picture of yourself and insert it here. Be sure to upload your picture file with your tex file.
+
+Answer:
+
+\includegraphics[scale=0.5]{MathFoundSelfie.jpg}
+
+
+
+\end{enumerate}
+\end{document}
