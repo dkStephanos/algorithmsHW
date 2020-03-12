@@ -1,0 +1,90 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{times}
+\usepackage{breqn}
+\usepackage{fancyhdr,graphicx,amsmath,amssymb}
+\usepackage[ruled,vlined]{algorithm2e}
+\include{pythonlisting}
+
+\title{Algorithms Homework 4}
+\author{Koi Stephanos}
+\date{October 2019}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+\item
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove if 5y is irrational, then y is irrational
+        \\[\medskipamount]
+        To show this, we will prove the contrapositive, which is: If \(y\) is rational, then \(5y\) is rational. Here, a rational number is defined as a number that can be expressed as a fraction, therefore this proves our original statement:
+        \begin{equation}
+            y = \frac{a}{b} \implies 5y = \frac{5a}{b},\quad b \neq 0
+        \end{equation}
+        \item Prove the sum of two rational numbers is rational
+        \\[\medskipamount]
+        This can be proved directly by the following statement:
+        \begin{equation}
+            x = \frac{a}{c}, y = \frac{b}{d} \implies x + y = \frac{ad + bc}{cd},\quad c \,\&\, d \neq 0
+        \end{equation}
+        \item Prove the product of two rational numbers is rational
+        \\[\medskipamount]
+        This can be proved directly by the following statement:
+        \begin{equation}
+            x = \frac{a}{c}, y = \frac{b}{d} \implies x * y = \frac{ab}{cd},\quad c \,\&\, d \neq 0
+        \end{equation}
+        \item Prove the sum of two irrational numbers isn't always irrational
+        \\[\medskipamount]
+        This can be proved directly by the following statement:
+        \begin{equation}
+            -\sqrt{2} + \sqrt{2} = 0
+        \end{equation}
+        \item Prove the sum of six consecutive integers is even
+        \\[\medskipamount]
+        This can be proved directly by the following statement:
+        \begin{equation}
+            a + (a + 1) + (a + 2) + (a + 3) + (a + 4) + (a + 5) = 6a + 15
+        \end{equation}
+        Here, \(6a\) is a multiple of 2, and therefore even, and the sum of an even and an odd is by definition odd, so this proves the statement.
+    \end{enumerate}
+\clearpage
+\item
+    Suppose we perform a sequence of \(n\) operations on a data structure in which the \(i_{th}\) operation costs \(i\) if \(i\) is an exact power of 2, and 1 otherwise. Use aggregate analysis to determine the amortized cost per operation.
+    \\[\medskipamount]
+    Here, we need to calculate the amount of powers of 2 that exist in the set of \(1-n\). This can be achieved by taking the floor of \(lgn\). Therefore, we can get the total operation cost for the non-powers by subtracting the number of powers of 2 from \(n\). To get the cost of the powers of 2, we take the summation of all of those values. Adding these to costs together and dividing by \(n\) gives us the following equation for the total cost per operation:
+        \begin{equation}
+            \frac{\sum_{i = 1}^{\lfloor lgn \rfloor} 2^i + (n - \lfloor lgn \rfloor)}{n} = \frac{2(2^{\lfloor lgn \rfloor} - 1) - \lfloor lgn \rfloor}{n} + 1
+        \end{equation}
+    This equation is dominated by the n term, so it is \(O(n)\), making the amortized cost for \(n\) items \(O(1)\) or constant time.
+    
+\item 
+    Suppose we perform a sequence of stack operations on a stack whose size never exceeds \(k\). After every \(k\) operations, we make a copy of the entire stack for backup purposes. Show that the cost of n stack operations, including copying the stack, is \(O(n)\) by assigning suitable amortized costs to the various stack operations.
+    \\[\medskipamount]
+    Here, there is a cost associated with each time you place an item on the stack, and an additional cost associated with the copy once the stack reaches a size of \(k\). As a result, placing a value of 2 on each value will carry us through the system. This means the total cost per operation would be \(2n\) which is \(O(n)\).
+
+\item
+
+\begin{enumerate}[label=(\alph*)]
+        \item Describe how to perform the SEARCH operation for this data structure. Analyze its worst-case running time.
+        \\[\medskipamount]
+        First, we must determine which arrays have values from the bit-wise representation of \(n\), which takes constant time. Next, since our lists are sorted, we can perform a binary search on each full array, for a total operation cost of \(lgn\). In the worst case, we have \(lg(n+1)\) full arrays, so our total run time would be \(lgn * lg(n+1)\) which is \(O((lgn)^2)\).
+        
+        \item Describe how to perform the INSERT operation. Analyze its worst-case and amortized running times.
+        \\[\medskipamount]
+        Here, we can describe the worst case as all current arrays are currently full, therefore an insert requires an increase in \(k\), i.e. a new array. As a result, an insert is performed by merging all current arrays and the value we are inserting together, and placing the resulting value in \(A_{k-1}\). This is essentially a merge sort for all n, so the running time for this operation would be \(O(n)\).
+        \\[\medskipamount]
+        Considering that, when we insert, we are essentially just tossing that value in the first array if that is empty, and if not, we are merging it into the first open array along with the contents of all the full arrays that come before. This means that regardless of our inserts, an element is only moved between arrays when the total number of elements is equal to the next highest power of 2. As a result, placing a value of \(lgn\) on each item will cary it through the entire system, as we every time \(lgn\) increments to the next integer, we perform our merges.
+        
+        \item Describe how to perform the DELETE operation.
+        \\[\medskipamount]
+        To perform a DELETE operation, we must first look for the smallest sized array that is full, which we will call \(A_s\). If \(A_s\) doesn't contain the element we are deleting, then merge one element from \(A_s\) into the array in which the element is being deleted. Regardless, at this point, \(A_s\) will contain one less element than it can fit. This is also the exact size of the total size of all the empty arrays which precede it, so simply disperse the elements of \(A_s\) to those empty arrays in chunks to maintain sorted order, and we're done.
+        
+    \end{enumerate}
+\end{enumerate}
+\end{document}
