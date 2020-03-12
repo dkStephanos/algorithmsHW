@@ -1,0 +1,181 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{times}
+\usepackage{breqn}
+\usepackage{fancyhdr,graphicx,amsmath,amssymb}
+\usepackage[ruled,vlined]{algorithm2e}
+\include{pythonlisting}
+
+
+\title{Algorithms Homework 3}
+\author{Koi Stephanos}
+\date{October 2019}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item 
+Algorithmic Run Times
+
+    \begin{table}[htbp]
+        \centering
+        \begin{tabular}{|c|c|}
+        \hline
+             Algorithm & Run Time  \\
+        \hline
+                Matrix Multiplication \cite{Vazirani}     &      \(O(n^2.81)\)      \\
+        \hline
+                Integer Multiplication \cite{Vazirani}    &    \(O(n^1.59)\)        \\
+        \hline
+                Polynomial Multiplication \cite{Vazirani}     &     \(O(n lg n)\)    \\
+        \hline
+                Shortest Path \cite{CMU}    &      \(O(n^2 lg n)\)    \\
+        \hline
+                Minimal Spanning Tree \cite{Jordan}    &    \(O(m lg n)\)            \\
+        \hline
+                Non-Quantum Factoring \cite{Purdue}    &    \(O^(e√(ln n)(ln ln n))\)          \\
+        \hline
+                Quantum Factoring \cite{Lomonaco}     &     \(O((lg n^2)2(lg lg n)(lg lg lg n)\)    \\
+        \hline        
+        \end{tabular}
+        \label{tab:run_times}
+    \end{table}
+
+\textbf{Fastest} - Quantum Factoring
+
+\item
+    \begin{enumerate}[label=(\alph*)]
+        \item \(A'.length = A.length\) \& all elements of \(A \in A'\)\medskip
+        \item Loop Invariant: \(A[j] \leq A[k]\) \& for all \(j \geq k\)\bigskip
+        \\Initialization: \(A[n]\), only one item so it must be the smallest\medskip
+        \\Termination: \(k = i\), so we're at the bottom, which is at this point the smallest number remaining, so \(A[j] = A[k]\)\medskip
+        \\Maintanence: Assume \(j = k\). Since \(A[j] = A[k]\), if \(A[k] \geq A[k - 1]\), according to the algorithm, we swap, making \(A[k] \leq A[k - 1]\), so \(A[j] \leq A[k - 1]\) and we maintain our looping variant.\medskip
+        \item Loop Invariant: \(A'[1] \leq A'[2] \leq ... A'[i - 1]\)\bigskip
+        \\Initialization: \(i = 1\), so \(A'[1] \leq A'[2] \leq ... A'[0]\), which is to say we have no elements, which are by default in order.\medskip
+        \\Termination: \(i = n + 1\), so \(A'[1] \leq A'[2] \leq ... A'[n]\), which is to say all elements are in order.\medskip
+        \\Maintanence: Assume \(A'[1] \leq A'[2] \leq ... A'[i - 1]\). When we increment to \(A[i]\), we run the inner loop and if \(A[i] > A[i -1]\), it is swapped, and that continues until everything up to  \(A[i]\), is in order, maintaining our looping variant.
+    \end{enumerate}
+    
+\item
+ \begin{enumerate}[label=(\alph*)]
+        \item Running time of \(\Theta(n)\)\medskip
+        \item Running time of \(\Theta(n^2)\)\\
+        \begin{minipage}{.7\linewidth}
+        \begin{algorithm}[H]
+            \SetAlgoLined
+            \KwResult{Evaluates Polynomial}
+             y = 0\;
+             temp = 1\;
+            \For{i = n \textbf{downto} 0}{
+                \eIf{if n \geq 1}{
+                    \For{j = n \textbf{downto} 1}{
+                        temp = x * temp\;
+                    }
+                    y += a * temp\;
+                    temp = 1\;
+                }{
+                    y += a\;
+                }
+            }
+           \caption{Naive Polynomial Evaluation}
+            \end{algorithm}
+        \end{minipage}
+        \medskip
+        \item Loop Invariant:
+        \begin{equation}
+            \sum_{k=0}^{n - (i + 1)} a_{k + i + 1} * x^k
+        \end{equation}
+        \\Initialization: \(i = n\), so:
+        \begin{equation}
+            y = \sum_{k=0}^{-1} a_{k + i + 1} * x^k = 0
+        \end{equation}
+        \\Termination: \(i = -1\), so:
+        \begin{equation}
+            y = \sum_{k=0}^{n} a_{k} * x^k = P(x)
+        \end{equation}
+        \\Maintanence: Assume the loop invariant is true and show for \(i + 1\).
+        \begin{equation}
+            \begin{split}
+                y = a_i + x\sum_{k=0}^{n - (i + 1)} a_{k + i + 1} * x^k = a_i + \sum_{k=0}^{n - (i + 1)} a_{k + i + 1} * x^{k + 1} \\= a_i + \sum_{k=1}^{n - (i + 1)} a_{k + i} * x^k = \sum_{k=0}^{n - i} a_{k + i} * x^k
+            \end{split}
+        \end{equation}
+        At this point, we have simplified the summation to the point it maintains our looping variant.
+    \end{enumerate}
+        
+\item Original Array: \(A = <.79, .13, .16, .64, .39, .20, .89, .53, .71, .42>\)\medskip
+
+        \begin{center}
+        \begin{tabular}[h]{|c|c|}
+        \hline
+             Buckets & Contents  \\
+        \hline
+                0    &   /\\
+        \hline
+                1    &   \(.13 \rightarrow .16 \)\\
+        \hline
+                2    &    \(.20\)\\
+        \hline
+                3    &      \(.39\)\\
+        \hline
+                4    &    \(.42\)\\
+        \hline
+                5    &    \(.53\)\\
+        \hline
+                6    &     \(.64\)\\
+        \hline 
+                7    &      \(.71 \rightarrow .79\)\\
+        \hline
+                8    &    \(.89\)\\
+        \hline
+                9    &    /\\
+        \hline
+        \end{tabular}
+        \label{tab:my_label}
+        \end{center}
+        Sorted Array: \(A = <.13, .16, .20, .39, .42, .53, .64, .71, .79, .89>\)
+
+\item
+
+\begin{enumerate}[label=(\alph*)]
+        \item Pseudocode\\
+        \begin{minipage}{.7\linewidth}
+            \begin{algorithm}[H]
+            \SetAlgoLined
+            \KwResult{Pairs red and blue jugs}
+             i, j = 0\;
+            \For{i \(<\) n; i++}{
+                \For{j \(<\) n; j++}{
+                    \If{R[i] == B[j]}{
+                        pairs += [i,j]\;
+                        B.remove(B[j])\;
+                    }
+                }
+            }
+            \caption{Jug Problem}
+            \end{algorithm}
+            \end{minipage}
+            \medskip
+        \item To prove that (a) is \(\Omega(n lg n)\), we have to show that our ideal path results in \(n lg n\) comparisons. When we make those comparisons, however, there are three possible outcomes, in which the red jug can be smaller, greater, or equal to the blue jug. As a result, the inner loop is essentially a decision tree with three nodes per comparison, so its height must be \(log_3 n!\). To traverse such a tree takes \(n lg n\) steps confirming our algorithm is \(\Omega(n lg n)\).
+    \end{enumerate}
+    
+\item Bonus:
+    \begin{enumerate}
+        \item Compare everything tournament style to find the min, which takes \(n - 1\) comparisons. Then look through the comparison tree and keep the elements that lost to the min along the way. These elements are of size \(lg n\) and are guaranteed to contain the second most min. Simply compare that list to itself to to obtain the second most min, which will take you \(lg n - 1\) steps, since the size of that list is equal to the height of the tree. You know have both the min and second most min and it took a combined \(n - lg n - 2\) steps.
+        \item Throw everything into a max list and a min list, then step through your original list tournament style, always keeping the min. During each comparison, remove the greater from your min list and the lesser from your max list, as they can no longer be the min or max respectively. Once we have stepped through our entire original list, we have obtained our min, and made \(n - 1\) comparisons. We have also reduced the size of our max list by \(\frac{1}{2}\). Comparing our remaining max candidates takes \(\frac{n}{2} - 1\) comparisons, for a combined \(\frac{3n}{2} - 2\) comparisons in total.
+   \end{enumerate}
+
+\end{enumerate}
+\begin{thebibliography}{00}
+\bibitem{Vazirani} \url{https://people.eecs.berkeley.edu/~vazirani/algorithms/chap2.pdf}
+\bibitem{CMU} \url{https://www.math.cmu.edu/~af1p/Texfiles/paths.pdf}
+\bibitem{Jordan} \url{https://people.eecs.berkeley.edu/~jordan/courses/174-spring02/notes/note9.pdf}
+\bibitem{Purdue}\url{https://www.cs.purdue.edu/homes/ssw/2014c.pdf}
+\bibitem{Lomonaco}\url{https://www.csee.umbc.edu/~lomonaco/ams/lecturenotes/SamShor.pdf}
+\end{thebibliography}
+\end{document}
